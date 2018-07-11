@@ -27,10 +27,11 @@
         </activity>
         <activity android:name=".HomeActivity" />
         <activity android:name=".MainActivity"/>
+        <activity android:name=".DescriptionPost"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="me.maprice.parsetagram.android.fileprovider"
+            android:authorities="me.maprice.parsetagram"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
