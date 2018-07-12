@@ -12,13 +12,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:text="TextView"
-        android:textStyle="bold"
+        android:textColor="@color/colorAccent"
         tools:layout_marginLeft="5dp" />
 
     <ImageView
         android:id="@+id/tvImage"
         android:layout_width="233dp"
-        android:layout_height="wrap_content"
+        android:layout_height="143dp"
         android:layout_below="@+id/tvUsername"
         android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/camera_shadow_fill" />
@@ -31,6 +31,24 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="75dp"
         android:layout_marginTop="181dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/black" />
+
+    <ImageView
+        android:id="@+id/profileImage"
+        android:layout_width="48dp"
+        android:layout_height="50dp"
+        android:layout_alignStart="@+id/tvUsername"
+        android:layout_below="@+id/tvUsername"
+        app:srcCompat="@drawable/instagram_user_outline_24" />
+
+    <TextView
+        android:id="@+id/dateCreated"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:text="TextView"
+        android:textColor="@color/black" />
 
 </RelativeLayout>

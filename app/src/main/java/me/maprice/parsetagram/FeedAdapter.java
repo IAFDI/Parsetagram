@@ -2,20 +2,30 @@ package me.maprice.parsetagram;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.Transformation;
+import com.bumptech.glide.load.resource.gifbitmap.GifBitmapWrapper;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 
+import java.io.File;
 import java.util.List;
 
 import me.maprice.parsetagram.model.Post;
+import me.maprice.parsetagram.model.User;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
 
@@ -46,23 +56,49 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
     public void onBindViewHolder(ViewHolder holder, int position) {
         //get data according to position
         Post post = mPosts.get(position);
+        ParseUser user = post.getUser();
 
-        //populate the views
-
-        //TODO - find out how to get username
-        //holder.tvUsername.setText(post.getUser());
+        try {
+            holder.tvUsername.setText(user.fetchIfNeeded().getUsername());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         holder.tvBody.setText(post.getDescription());
+        Toast.makeText(context, post.getDate(),Toast.LENGTH_LONG).show();
+        holder.tvTimeCreated.setText(post.getDate());
 
 //        int radius = 50; // corner radius, higher value = more rounded
 //        int margin = 10; // crop margin, set to 0 for corners with no crop
 
+        Uri url = getUrl(R.drawable.instagram_user_outline_24);
+        try {
+            ParseFile profImage = user.fetchIfNeeded().getParseFile("ProfileImage");
+            Glide.with(context)
+                    .load(profImage.getUrl())
+                    .error(R.drawable.instagram_user_outline_24)
+                    .fitCenter()
+                    .into(holder.tvProfileImage);
+
+        } catch (Exception e) {
+            Log.d("FeedAdapter", "No Profile Image");
+            Glide.with(context)
+                    .load(new File(url.getPath()))
+                    .error(R.drawable.instagram_user_outline_24)
+                    .fitCenter()
+                    .into(holder.tvProfileImage);
+        }
+
         Glide.with(context)
-                .load(post.getImage())
+                .load(post.getImage().getUrl())
+                .fitCenter()
+                .centerCrop()
                 .into(holder.tvBodyImage);
 
     }
 
-
+    public static Uri getUrl(int res){
+        return Uri.parse("android.resource://me.maprice.parsetagram/" + res);
+    }
 
     // Clean all elements of the recycler
     public void clear() {
@@ -87,6 +123,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
         public TextView tvUsername;
         public TextView tvBody;
         public ImageView tvBodyImage;
+        public ImageView tvProfileImage;
+        public TextView tvTimeCreated;
 
 
         public ViewHolder(View itemView) {
@@ -96,6 +134,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
             tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
             tvBody = (TextView) itemView.findViewById(R.id.tvDescription);
             tvBodyImage = (ImageView) itemView.findViewById(R.id.tvImage);
+            tvProfileImage = (ImageView) itemView.findViewById(R.id.profileImage);
+            tvTimeCreated = (TextView) itemView.findViewById(R.id.dateCreated);
 
         }
     }

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Create the placeholder fragments to be passed to the ViewPager
-        fragments.add(new NotYetImplementedFragment());
+        fragments.add(new FeedFragment());
         fragments.add(new CreateFragment());
         fragments.add(new NotYetImplementedFragment());
 
