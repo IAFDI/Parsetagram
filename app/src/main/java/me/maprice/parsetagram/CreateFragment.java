@@ -67,19 +67,7 @@ public class CreateFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        if (Build.VERSION.SDK_INT >= 23) {
-//            int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-//                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-//            }
-//        }
-//        if (Build.VERSION.SDK_INT >= 23) {
-//            int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
-//            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-//                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
-//            }
-//        }
-//
+
         description = (EditText) getActivity().findViewById(R.id.descriptionText);
         createButton = (ImageButton) getActivity().findViewById(R.id.submit);
         imageTaken = (ImageButton) getActivity().findViewById(R.id.imageButton);
@@ -87,8 +75,6 @@ public class CreateFragment extends Fragment{
         imageTaken.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getActivity(), "Button clicked", Toast.LENGTH_LONG).show();
-                //takePicture();
                 onLaunchCamera();
 
             }
@@ -154,9 +140,6 @@ public class CreateFragment extends Fragment{
     public String photoFileName = "photo.jpg";
     File photoFile;
 
-
-    //TODO - error in intent formation
-
     public void onLaunchCamera() {
         // create Intent to take a picture and return control to the calling application
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -202,96 +185,12 @@ public class CreateFragment extends Fragment{
                 // by this point we have the camera photo on disk
                 Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
                 Bitmap scaledBitmap = Bitmap.createScaledBitmap(takenImage, 246, 150, true);
-                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(takenImage, 246);
-
-//                // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
-//                Uri resizedUri = FileProvider.getPhotoFileUri(photoFileName + "_resized");
-//                File resizedFile = new File(resizedUri.getPath());
-//                try {
-//                    resizedFile.createNewFile();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                FileOutputStream fos = null;
-//                try {
-//                    fos = new FileOutputStream(resizedFile);
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-//                // Write the bytes of the bitmap to file
-//                fos.write(bytes.toByteArray());
-//                try {
-//                    fos.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-
-                // RESIZE BITMAP, see section below
-                // Load the taken image into a preview
-                //ImageView ivPreview = (ImageView) getActivity().findViewById(R.id.i);
                 Drawable d = new BitmapDrawable(getResources(), scaledBitmap);
                 imageTaken.setBackground(d);
-               // Intent moveToDescription = new Intent(getContext(), DescriptionPost.class);
-//                moveToDescription.putExtra("imageURL", photoFileName);
-//                startActivity(moveToDescription);
-
             } else { // Result was a failure
                 Toast.makeText(getActivity(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
         }
     }
-
-
-
-//    private void takePicture(){
-//        Intent imageCapture = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        if (imageCapture.resolveActivity(getContext().getPackageManager()) != null) {
-//            File image = null;
-//            try {
-//                image = createImageFile();
-//            } catch (IOException ex) {
-//                //image creation failed
-//                Log.d("Create Fragment", "Image creation failed");
-//            }
-//            if (image != null) {
-//                Uri photoURI = FileProvider.getUriForFile(getContext(),
-//                        "me.maprice.parsetagram.android.fileprovider", image);
-//                imageCapture.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-//                startActivityForResult(imageCapture, requestCode);
-//            }
-//
-//        } else {
-//            Toast.makeText(getActivity(), "Error: No Camera Available", Toast.LENGTH_LONG);
-//        }
-//    }
-//
-//    private File createImageFile() throws IOException{
-//        //create an image file name
-//        String timeStamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(new Date());
-//        String imageFileName = "JPEG_" + timeStamp + "_";
-//        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-//        File image = File.createTempFile(imageFileName, ".jpg.", storageDir);
-//
-//        photoPath = image.getAbsolutePath();
-//        return image;
-//    }
-//
-//    private void galleryAddPic() {
-//        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-//        File f = new File(photoPath);
-//        Uri contentUri = Uri.fromFile(f);
-//        mediaScanIntent.setData(contentUri);
-//        getContext().sendBroadcast(mediaScanIntent);
-//    }
-//
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == requestCode && resultCode == RESULT_OK) {
-//            galleryAddPic();
-//            Intent moveToDescription = new Intent(getContext(), DescriptionPost.class);
-//            moveToDescription.putExtra("imageURL", photoPath);
-//            startActivity(moveToDescription);
-//        }
-//    }
-
 
 }
