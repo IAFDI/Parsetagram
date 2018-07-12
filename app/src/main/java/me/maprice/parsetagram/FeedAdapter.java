@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,6 +55,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
     @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
         //get data according to position
         Post post = mPosts.get(position);
         ParseUser user = post.getUser();
@@ -64,8 +66,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
             e.printStackTrace();
         }
         holder.tvBody.setText(post.getDescription());
-        Toast.makeText(context, post.getDate(),Toast.LENGTH_LONG).show();
-        holder.tvTimeCreated.setText(post.getDate());
+        holder.tvTimeCreated.setText(post.getCreatedAt().toString());
+        Log.d("Testing date", post.getCreatedAt().toString());
 
 //        int radius = 50; // corner radius, higher value = more rounded
 //        int margin = 10; // crop margin, set to 0 for corners with no crop
@@ -100,18 +102,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
         return Uri.parse("android.resource://me.maprice.parsetagram/" + res);
     }
 
-    // Clean all elements of the recycler
-    public void clear() {
-        mPosts.clear();
-        notifyDataSetChanged();
-    }
-
-    // Add a list of items -- change to type used
-    public void addAll(List<Post> list) {
-        mPosts.addAll(list);
-        notifyDataSetChanged();
-    }
-
 
     @Override
     public int getItemCount() {
@@ -138,6 +128,18 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
             tvTimeCreated = (TextView) itemView.findViewById(R.id.dateCreated);
 
         }
+    }
+
+    // Clean all elements of the recycler
+    public void clear() {
+        mPosts.clear();
+        notifyDataSetChanged();
+    }
+
+    // Add a list of items -- change to type used
+    public void addAll(List<Post> list) {
+        mPosts.addAll(list);
+        notifyDataSetChanged();
     }
 
 }

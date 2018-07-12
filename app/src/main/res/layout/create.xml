@@ -9,8 +9,8 @@
 
     <ImageButton
         android:id="@+id/imageButton"
-        android:layout_width="263dp"
-        android:layout_height="190dp"
+        android:layout_width="282dp"
+        android:layout_height="240dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/camera_shadow_fill" />
@@ -18,11 +18,9 @@
     <EditText
         android:id="@+id/descriptionText"
         android:layout_width="203dp"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:layout_alignStart="@+id/imageButton"
         android:layout_alignTop="@+id/submit"
-        android:layout_below="@id/imageButton"
-        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="Comment here"
         android:inputType="textMultiLine" />
@@ -31,10 +29,9 @@
         android:id="@+id/submit"
         android:layout_width="38dp"
         android:layout_height="39dp"
+        android:layout_alignEnd="@+id/imageButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="189dp"
-        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="253dp"
         android:background="@drawable/icon"
         android:scaleType="centerCrop" />
 </RelativeLayout>

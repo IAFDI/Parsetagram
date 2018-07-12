@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -25,16 +27,17 @@ import java.util.List;
 import me.maprice.parsetagram.model.Post;
 import me.maprice.parsetagram.model.User;
 
-public class FeedFragment extends Fragment{
+public class FeedFragment extends Fragment {
 
     FeedAdapter feedAdapter;
     ArrayList<Post> posts;
     RecyclerView rvPosts;
-    //private SwipeRefreshLayout swipeContainer;
+    private SwipeRefreshLayout swipeContainer;
+    private ProgressBar pb;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.adapter_layout, container, false);
     }
 
@@ -52,9 +55,35 @@ public class FeedFragment extends Fragment{
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
         //set adapter
         rvPosts.setAdapter(feedAdapter);
-        generateFeed();
 
+        // Lookup the swipe container view
+        swipeContainer = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeContainer);
+        //progress bar
+        pb = (ProgressBar) getActivity().findViewById(R.id.progressBar);
+
+        Log.d("Feed Fragment", "Swipe Container created");
+        // Setup refresh listener which triggers new data loading
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                Log.d("Feed Fragment", "Swipe Container refreshed");
+                // Make sure you call swipeContainer.setRefreshing(false)
+                feedAdapter.clear();
+                posts.clear();
+                generateFeed();
+                feedAdapter.addAll(posts);
+                swipeContainer.setRefreshing(false);
+            }
+        });
+        // Configure the refreshing colors
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_purple, android.R.color.holo_blue_light,
+                R.color.colorAccent);
+
+        generateFeed();
     }
+
 
     public void generateFeed(String user) {
         // Specify which class to query
@@ -77,7 +106,7 @@ public class FeedFragment extends Fragment{
         });
     }
 
-    public void generateFeed(){
+    public void generateFeed() {
         // Specify which class to query
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         //no query conditions
