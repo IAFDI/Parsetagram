@@ -56,7 +56,7 @@ public class CreateFragment extends Fragment{
     private EditText description;
     private ImageButton createButton;
     private ImageButton imageTaken;
-    private String imagePath;
+    private String imagePath = "N/A";
 
     @Nullable
     @Override
@@ -97,23 +97,31 @@ public class CreateFragment extends Fragment{
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final String postDescription = description.getText().toString();
-                final ParseUser user = ParseUser.getCurrentUser();
+                if (imagePath.equals("N/A")) {
+                    Toast.makeText(getContext(), "Please take a picture to post", Toast.LENGTH_SHORT).show();
 
-                final File file = new File(imagePath);
-                final ParseFile image = new ParseFile(file);
-                image.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null){
-                            createPost(postDescription, image, user);
-                            imageTaken.setBackground(R.drawable.camera_shadow_fill);
-                            
-                        }else{
-                            e.printStackTrace();
+                }else{
+                    final String postDescription = description.getText().toString();
+                    final ParseUser user = ParseUser.getCurrentUser();
+
+                    final File file = new File(imagePath);
+                    final ParseFile image = new ParseFile(file);
+                    image.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                createPost(postDescription, image, user);
+                                //reset
+                                imageTaken.setBackground(getContext().getResources().getDrawable(R.drawable.camera_shadow_fill));
+                                description.setText("");
+                                imagePath = "N/A";
+
+                            } else {
+                                e.printStackTrace();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
 
