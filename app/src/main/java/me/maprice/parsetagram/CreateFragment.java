@@ -83,8 +83,9 @@ public class CreateFragment extends Fragment{
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (imagePath.equals("N/A")) {
-                    Toast.makeText(getContext(), "Please take a picture to post", Toast.LENGTH_SHORT).show();
+                Log.d("Create Fragment", description.getText().toString());
+                if (imagePath.equals("N/A") || description.getText().toString().equals("")) {
+                    Toast.makeText(getContext(), "Please take a picture and comment to post", Toast.LENGTH_SHORT).show();
 
                 }else{
                     final String postDescription = description.getText().toString();
