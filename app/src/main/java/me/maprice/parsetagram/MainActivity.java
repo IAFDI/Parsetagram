@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new FeedFragment());
         fragments.add(new CreateFragment());
         fragments.add(new NotYetImplementedFragment());
+        fragments.add(new NotYetImplementedFragment());
 
         // Grab a reference to our view pager.
         viewPager = findViewById(R.id.view);
@@ -82,29 +83,22 @@ public class MainActivity extends AppCompatActivity {
         // we then delegate this out to the view pager adapter such that it can switch the
         // page which we are currently displaying
         bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.homeFeed:
-                        // Set the item to the first item in our list.
-                        // This is the home placeholder fragment.
-                        viewPager.setCurrentItem(0);
-                        return true;
-                    case R.id.create:
-                        // Set the item to the first item in our list.
-                        // This is the discovery placeholder fragment.
-                        viewPager.setCurrentItem(1);
-                        return true;
-                    case R.id.user:
-                        // Set the current item to the third item in our list
-                        // which is the profile fragment placeholder
-                        viewPager.setCurrentItem(2);
-                        return true;
-                    default:
-                        return false;
-                }
-            }
-        });
+             @Override
+             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                 switch (menuItem.getItemId()) {
+                     case R.id.homeFeed:
+                         viewPager.setCurrentItem(0);
+                         return true;
+                     case R.id.create:
+                         viewPager.setCurrentItem(1);
+                         return true;
+                     case R.id.user:
+                         viewPager.setCurrentItem(2);
+                         return true;
+                 }
+                 return false;
+             }
+         });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override

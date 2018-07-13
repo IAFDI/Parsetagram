@@ -19,19 +19,21 @@
         android:id="@+id/descriptionText"
         android:layout_width="203dp"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/imageButton"
+        android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/submit"
+        android:layout_below="@id/imageButton"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="58dp"
         android:ems="10"
         android:hint="Comment here"
         android:inputType="textMultiLine" />
 
     <ImageButton
         android:id="@+id/submit"
-        android:layout_width="38dp"
-        android:layout_height="39dp"
+        android:layout_width="47dp"
+        android:layout_height="45dp"
         android:layout_alignEnd="@+id/imageButton"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="253dp"
+        android:layout_centerVertical="true"
         android:background="@drawable/icon"
         android:scaleType="centerCrop" />
 </RelativeLayout>

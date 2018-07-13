@@ -35,6 +35,12 @@ public class FeedFragment extends Fragment {
     private SwipeRefreshLayout swipeContainer;
     private ProgressBar pb;
 
+    // create a custom callback here
+    // that would have a method called onDisplayDetails(Post post)
+
+    // I would then have an instance variable so that way I can notify the callback
+    // at the appropriate time.
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +56,7 @@ public class FeedFragment extends Fragment {
         //initialize data source
         posts = new ArrayList<>();
         //construct adapter from this data source
-        feedAdapter = new FeedAdapter(posts);
+        feedAdapter = new FeedAdapter(posts); // when the post was clicked i would then call callback.onDisplayDetails(post);
         //RecyclerView setup (layout manager, use adapter)
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
         //set adapter
@@ -60,6 +66,7 @@ public class FeedFragment extends Fragment {
         swipeContainer = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeContainer);
         //progress bar
         pb = (ProgressBar) getActivity().findViewById(R.id.progressBar);
+        pb.setVisibility(ProgressBar.INVISIBLE);
 
         Log.d("Feed Fragment", "Swipe Container created");
         // Setup refresh listener which triggers new data loading
@@ -69,11 +76,8 @@ public class FeedFragment extends Fragment {
                 // Your code to refresh the list here.
                 Log.d("Feed Fragment", "Swipe Container refreshed");
                 // Make sure you call swipeContainer.setRefreshing(false)
-                feedAdapter.clear();
-                posts.clear();
-                generateFeed();
-                feedAdapter.addAll(posts);
-                swipeContainer.setRefreshing(false);
+                refresh();
+
             }
         });
         // Configure the refreshing colors
@@ -96,8 +100,8 @@ public class FeedFragment extends Fragment {
             public void done(List<Post> objectList, ParseException e) {
                 if (e == null) {
                     for (int i = 0; i < objectList.size(); i++) {
-                        posts.add(objectList.get(i));
-                        feedAdapter.notifyItemInserted(posts.size() - 1);
+                        posts.add(0,objectList.get(i));
+                        feedAdapter.notifyItemInserted(0);
                     }
                 } else {
                     e.printStackTrace();
@@ -116,8 +120,8 @@ public class FeedFragment extends Fragment {
             public void done(List<Post> objectList, ParseException e) {
                 if (e == null) {
                     for (int i = 0; i < objectList.size(); i++) {
-                        posts.add(objectList.get(i));
-                        feedAdapter.notifyItemInserted(posts.size() - 1);
+                        posts.add(0,objectList.get(i));
+                        feedAdapter.notifyItemInserted(0);
                     }
                 } else {
                     e.printStackTrace();
@@ -125,5 +129,33 @@ public class FeedFragment extends Fragment {
             }
         });
 
+    }
+
+    public void refresh(){
+
+        pb.setVisibility(ProgressBar.VISIBLE);
+        feedAdapter.clear();
+        posts.clear();
+        // Specify which class to query
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        //no query conditions
+        // Specify the object id
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> objectList, ParseException e) {
+                if (e == null) {
+                    for (int i = 0; i < objectList.size(); i++) {
+                        posts.add(0,objectList.get(i));
+                        feedAdapter.notifyItemInserted(0);
+                    }
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        feedAdapter.addAll(posts);
+        swipeContainer.setRefreshing(false);
+        pb.setVisibility(ProgressBar.INVISIBLE);
     }
 }

@@ -7,12 +7,19 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import org.parceler.Parcel;
+
 @ParseClassName("POST")
+@Parcel
 public class Post extends ParseObject{
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_IMAGE = "image";
     private static final String KEY_USER = "user";
     private static final String KEY_DATE = "createdAt";
+
+    public Post(){
+        //
+    }
 
     public String getDate(){return getString(KEY_DATE);}
 

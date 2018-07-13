@@ -2,6 +2,8 @@ package me.maprice.parsetagram;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Movie;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,6 +24,8 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
+import org.parceler.Parcels;
+
 import java.io.File;
 import java.util.List;
 
@@ -30,9 +34,15 @@ import me.maprice.parsetagram.model.User;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
 
-    private List<Post> mPosts;
+    List<Post> mPosts;
     Context context;
     ProgressBar pb;
+
+    // create a callback here.
+    // that would have a method called onPostClicked(int position, Post post)
+
+
+    // I would then have a instance variable for my callback
 
     //pass in the Tweets array in the constructor
     public FeedAdapter(List<Post> posts){
@@ -109,7 +119,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
     }
 
     // create ViewHolder class
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView tvUsername;
         public TextView tvBody;
         public ImageView tvBodyImage;
@@ -126,6 +136,27 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
             tvBodyImage = (ImageView) itemView.findViewById(R.id.tvImage);
             tvProfileImage = (ImageView) itemView.findViewById(R.id.profileImage);
             tvTimeCreated = (TextView) itemView.findViewById(R.id.dateCreated);
+
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+
+            //item position
+            int position = getAdapterPosition();
+            //make sure position exists in view
+            if (position != RecyclerView.NO_POSITION){
+                //get post
+                Post post = mPosts.get(position);
+                //create intent
+                Intent intent = new Intent(context, DetailsActivity.class);
+                // serialize the movie using parceler, use its short name as a key
+                intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(post));
+                // show the activity
+                context.startActivity(intent);
+            }
 
         }
     }

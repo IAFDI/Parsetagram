@@ -50,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
-        // TODO add proper imagePath
+
         description = (EditText) findViewById(R.id.descriptionText);
         createButton = (Button) findViewById(R.id.createButton);
         refreshButton = (Button) findViewById(R.id.refreshButton);
@@ -61,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
                final String postDescription = description.getText().toString();
                final ParseUser user = ParseUser.getCurrentUser();
 
-               //TODO get image from user
+
                final File file = new File(imagePath);
                final ParseFile image = new ParseFile(file);
                image.saveInBackground(new SaveCallback() {
