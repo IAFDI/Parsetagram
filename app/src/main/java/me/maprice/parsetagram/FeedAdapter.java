@@ -18,8 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.Transformation;
-import com.bumptech.glide.load.resource.gifbitmap.GifBitmapWrapper;
+import com.bumptech.glide.request.RequestOptions;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -29,6 +28,7 @@ import org.parceler.Parcels;
 import java.io.File;
 import java.util.List;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.maprice.parsetagram.model.Post;
 import me.maprice.parsetagram.model.User;
 
@@ -87,23 +87,33 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
             ParseFile profImage = user.fetchIfNeeded().getParseFile("ProfileImage");
             Glide.with(context)
                     .load(profImage.getUrl())
-                    .error(R.drawable.instagram_user_outline_24)
-                    .fitCenter()
+                    .apply(
+                            RequestOptions.fitCenterTransform()
+                                    .error(R.drawable.instagram_user_outline_24)
+                    )
+                    .apply(RequestOptions.circleCropTransform())
                     .into(holder.tvProfileImage);
 
         } catch (Exception e) {
             Log.d("FeedAdapter", "No Profile Image");
             Glide.with(context)
                     .load(new File(url.getPath()))
-                    .error(R.drawable.instagram_user_outline_24)
-                    .fitCenter()
+                    .apply(
+                            RequestOptions.fitCenterTransform()
+                                    .error(R.drawable.instagram_user_outline_24)
+                    )
+                    .apply(RequestOptions.circleCropTransform())
                     .into(holder.tvProfileImage);
         }
 
         Glide.with(context)
                 .load(post.getImage().getUrl())
-                .fitCenter()
-                .centerCrop()
+                .apply(
+                        RequestOptions.bitmapTransform(
+                                new RoundedCornersTransformation(10, 10))
+                )
+                .apply(RequestOptions.fitCenterTransform())
+                .apply(RequestOptions.centerCropTransform())
                 .into(holder.tvBodyImage);
 
     }

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -18,6 +19,7 @@ import org.parceler.Parcels;
 
 import java.io.File;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 import me.maprice.parsetagram.model.Post;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -58,23 +60,33 @@ public class DetailsActivity extends AppCompatActivity {
             ParseFile profImage = user.fetchIfNeeded().getParseFile("ProfileImage");
             Glide.with(this)
                     .load(profImage.getUrl())
-                    .error(R.drawable.instagram_user_outline_24)
-                    .fitCenter()
+                    .apply(
+                            RequestOptions.fitCenterTransform()
+                                    .error(R.drawable.instagram_user_outline_24)
+                    )
+                    .apply(RequestOptions.circleCropTransform())
                     .into(userImage);
 
         } catch (Exception e) {
             Log.d("FeedAdapter", "No Profile Image");
             Glide.with(this)
                     .load(new File(url.getPath()))
-                    .error(R.drawable.instagram_user_outline_24)
-                    .fitCenter()
+                    .apply(
+                            RequestOptions.fitCenterTransform()
+                                    .error(R.drawable.instagram_user_outline_24)
+                    )
+                    .apply(RequestOptions.circleCropTransform())
                     .into(userImage);
         }
 
         Glide.with(this)
                 .load(post.getImage().getUrl())
-                .fitCenter()
-                .centerCrop()
+                .apply(
+                        RequestOptions.bitmapTransform(
+                                new RoundedCornersTransformation(10, 10))
+                )
+                .apply(RequestOptions.fitCenterTransform())
+                .apply(RequestOptions.centerCropTransform())
                 .into(postImage);
 
     }
