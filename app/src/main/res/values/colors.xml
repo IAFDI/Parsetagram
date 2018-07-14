@@ -67,7 +67,7 @@
     <color name="browser_more_menu_text_color">#ff373e4d</color>
     <color name="browser_more_menu_tint">#ff6a7180</color>
     <color name="browser_progress_bar_color">#1a000000</color>
-    <color name="browser_secondary_text">#ff606770</color>
+    <color name="browser_secondary_text">#606770</color>
     <color name="browser_subtitle_text_color">#7f000000</color>
     <color name="browser_title_text_color">#ff000000</color>
     <color name="bugreporter_screen_cancel_background">#ffffe6cc</color>

@@ -38,8 +38,7 @@ public class MainActivity extends AppCompatActivity {
         // Create the placeholder fragments to be passed to the ViewPager
         fragments.add(new FeedFragment());
         fragments.add(new CreateFragment());
-        fragments.add(new NotYetImplementedFragment());
-        fragments.add(new NotYetImplementedFragment());
+        fragments.add(new ProfileFragment());
 
         // Grab a reference to our view pager.
         viewPager = findViewById(R.id.view);

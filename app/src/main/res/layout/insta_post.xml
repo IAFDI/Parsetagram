@@ -21,28 +21,35 @@
 
     <ImageView
         android:id="@+id/tvImage"
-        android:layout_width="match_parent"
-        android:layout_height="301dp"
+        android:layout_width="373dp"
+        android:layout_height="308dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="60dp"
-        app:srcCompat="@drawable/camera_shadow_fill" />
+        android:background="@drawable/camera_shadow_fill" />
 
     <TextView
         android:id="@+id/tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvImage"
-        android:layout_marginTop="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvImage"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="40dp"
         android:text="TextView"
         android:textColor="@color/black" />
 
     <ImageView
         android:id="@+id/profileImage"
-        android:layout_width="52dp"
-        android:layout_height="45dp"
+        android:layout_width="47dp"
+        android:layout_height="44dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
         app:srcCompat="@drawable/instagram_user_outline_24" />
 
     <TextView
@@ -50,8 +57,46 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvDescription"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="3dp"
         android:text="TextView"
-        android:textColor="@color/black" />
+        android:textColor="@color/browser_secondary_text" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="37dp"
+        android:layout_height="30dp"
+        android:layout_alignEnd="@+id/profileImage"
+        android:layout_below="@+id/tvImage"
+        android:layout_marginEnd="3dp"
+        app:srcCompat="@drawable/ufi_heart" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="35dp"
+        android:layout_height="30dp"
+        android:layout_alignStart="@+id/tvUsername"
+        android:layout_below="@+id/tvImage"
+        app:srcCompat="@drawable/ufi_comment" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="50dp"
+        android:layout_height="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvImage"
+        android:layout_marginStart="117dp"
+        app:srcCompat="@drawable/ufi_new_direct" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="32dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/imageView2"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="26dp"
+        app:srcCompat="@drawable/ufi_save"
+        tools:tint="@color/black" />
 
 </RelativeLayout>

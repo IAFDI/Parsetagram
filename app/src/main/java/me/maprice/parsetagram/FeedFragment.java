@@ -21,6 +21,7 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -89,30 +90,12 @@ public class FeedFragment extends Fragment {
     }
 
 
-    public void generateFeed(String user) {
-        // Specify which class to query
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        //query conditions
-        query.whereEqualTo("user", user);
-        // Specify the object id
-        query.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> objectList, ParseException e) {
-                if (e == null) {
-                    for (int i = 0; i < objectList.size(); i++) {
-                        posts.add(0,objectList.get(i));
-                        feedAdapter.notifyItemInserted(0);
-                    }
-                } else {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+
 
     public void generateFeed() {
         // Specify which class to query
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        Post.Query query = new Post.Query();
+        query.getTop();
         //no query conditions
         // Specify the object id
         query.findInBackground(new FindCallback<Post>() {
@@ -120,14 +103,15 @@ public class FeedFragment extends Fragment {
             public void done(List<Post> objectList, ParseException e) {
                 if (e == null) {
                     for (int i = 0; i < objectList.size(); i++) {
-                        posts.add(0,objectList.get(i));
-                        feedAdapter.notifyItemInserted(0);
+                        posts.add(objectList.get(i));
+                        feedAdapter.notifyItemInserted(objectList.size()-1);
                     }
                 } else {
                     e.printStackTrace();
                 }
             }
         });
+        //Collections.reverse(posts);
 
     }
 
@@ -137,24 +121,24 @@ public class FeedFragment extends Fragment {
         feedAdapter.clear();
         posts.clear();
         // Specify which class to query
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        //no query conditions
+        Post.Query query = new Post.Query();
+        query.getTop();
         // Specify the object id
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> objectList, ParseException e) {
                 if (e == null) {
                     for (int i = 0; i < objectList.size(); i++) {
-                        posts.add(0,objectList.get(i));
-                        feedAdapter.notifyItemInserted(0);
+                        posts.add(objectList.get(i));
+                        feedAdapter.notifyItemInserted(objectList.size()-1);
                     }
                 } else {
                     e.printStackTrace();
                 }
             }
         });
-
         feedAdapter.addAll(posts);
+        //Collections.reverse(posts);
         swipeContainer.setRefreshing(false);
         pb.setVisibility(ProgressBar.INVISIBLE);
     }

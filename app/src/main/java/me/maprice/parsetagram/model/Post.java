@@ -1,5 +1,7 @@
 package me.maprice.parsetagram.model;
 
+import android.text.format.DateUtils;
+
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -8,6 +10,9 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.parceler.Parcel;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 @ParseClassName("POST")
 public class Post extends ParseObject{
@@ -20,7 +25,9 @@ public class Post extends ParseObject{
         //
     }
 
-    public String getDate(){return getString(KEY_DATE);}
+    public String getDate(){
+        return getString(KEY_DATE);
+    }
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -46,6 +53,7 @@ public class Post extends ParseObject{
         put(KEY_USER, user);
     }
 
+
     public static class Query extends ParseQuery<Post> {
         public Query(){
             super(Post.class);
@@ -53,6 +61,7 @@ public class Post extends ParseObject{
 
         public Query getTop(){
             setLimit(20);
+            orderByDescending("createdAt");
             return this;
         }
 
