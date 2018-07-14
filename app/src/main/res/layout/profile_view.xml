@@ -4,14 +4,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
         android:layout_marginTop="15dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/blue_2"
+        android:visibility="invisible" />
+
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeView"
@@ -24,10 +26,11 @@
             android:id="@+id/recycle_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
 
     <ImageButton
         android:id="@+id/image"
@@ -38,6 +41,8 @@
         android:layout_marginStart="14dp"
         android:layout_marginTop="5dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/instagram_user_outline_24" />
+        android:src="@drawable/instagram_user_outline_24"
+        android:visibility="invisible" />
+
 
 </RelativeLayout>

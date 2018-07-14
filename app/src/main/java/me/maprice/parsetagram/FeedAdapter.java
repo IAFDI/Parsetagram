@@ -91,10 +91,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder>  {
             ParseFile profImage = user.fetchIfNeeded().getParseFile("ProfileImage");
             Glide.with(context)
                     .load(profImage.getUrl())
-                    .apply(
-                            RequestOptions.fitCenterTransform()
-                                    .error(R.drawable.instagram_user_outline_24)
-                    )
                     .apply(RequestOptions.circleCropTransform())
                     .into(holder.tvProfileImage);
 
